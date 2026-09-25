@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Hero from "./components/Hero";
-import SetupSteps from "./components/SetupSteps";
-import Parameters from "./components/Parameters";
-import SystemRequirements from "./components/SystemRequirements";
-import Features from "./components/Features";
-import CodeViewer from "./components/CodeViewer";
+import ArchitectureHero from "./components/ArchitectureHero";
+import ArchitectureOverview from "./components/ArchitectureOverview";
+import DomainBoundaries from "./components/DomainBoundaries";
+import TechnologyStack from "./components/TechnologyStack";
+import EngineeringPrinciples from "./components/EngineeringPrinciples";
+import ImplementationStages from "./components/ImplementationStages";
 import Footer from "./components/Footer";
 
 export default function App() {
@@ -21,20 +21,20 @@ export default function App() {
                 <span className="text-emerald-400 text-sm font-bold">E</span>
               </div>
               <span className="text-sm font-semibold text-gray-200">
-                ERP v1.2.0 LTS
+                ERP Platform
               </span>
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                setup.ps1
+                Architecture
               </span>
             </div>
             <div className="hidden md:flex items-center gap-1">
               {[
                 { id: "overview", label: "Overview" },
-                { id: "steps", label: "Steps" },
-                { id: "params", label: "Parameters" },
-                { id: "requirements", label: "Requirements" },
-                { id: "features", label: "Features" },
-                { id: "code", label: "Source" },
+                { id: "architecture", label: "Architecture" },
+                { id: "domains", label: "Domains" },
+                { id: "technology", label: "Technology" },
+                { id: "principles", label: "Principles" },
+                { id: "stages", label: "Stages" },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -60,21 +60,21 @@ export default function App() {
 
       {/* Main Content */}
       <main className="pt-14">
-        <Hero />
-        <section id="steps">
-          <SetupSteps />
+        <ArchitectureHero />
+        <section id="architecture">
+          <ArchitectureOverview />
         </section>
-        <section id="params">
-          <Parameters />
+        <section id="domains">
+          <DomainBoundaries />
         </section>
-        <section id="requirements">
-          <SystemRequirements />
+        <section id="technology">
+          <TechnologyStack />
         </section>
-        <section id="features">
-          <Features />
+        <section id="principles">
+          <EngineeringPrinciples />
         </section>
-        <section id="code">
-          <CodeViewer />
+        <section id="stages">
+          <ImplementationStages />
         </section>
         <Footer />
       </main>

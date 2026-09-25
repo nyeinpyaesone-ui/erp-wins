@@ -10,51 +10,59 @@ export default function Footer() {
                 <span className="text-emerald-400 text-sm font-bold">E</span>
               </div>
               <span className="text-sm font-semibold text-gray-200">
-                ERP v1.2.0 LTS
+                ERP Platform
               </span>
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
-              Production-oriented, idempotent setup script for enterprise
-              resource planning deployment. Designed for Windows 10 x64
-              environments.
+              Production-oriented modular business platform with clean domain
+              boundaries, transactional events, and evidence-based service
+              extraction. Microservices are not the default.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Priorities */}
           <div>
             <h4 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-4">
-              Script Info
+              Priorities
             </h4>
-            <ul className="space-y-2">
+            <ol className="space-y-1.5">
               {[
-                { label: "Version", value: "1.2.0 LTS" },
-                { label: "Platform", value: "Windows 10 x64" },
-                { label: "Language", value: "PowerShell 5.1+" },
-                { label: "License", value: "Proprietary" },
-              ].map((item) => (
-                <li key={item.label} className="flex items-center justify-between text-xs">
-                  <span className="text-gray-500">{item.label}</span>
-                  <span className="text-gray-300">{item.value}</span>
+                "Correctness",
+                "Data integrity",
+                "Security",
+                "Maintainability",
+                "Testability",
+                "Observability",
+                "Performance",
+                "Operational reliability",
+              ].map((item, i) => (
+                <li key={item} className="flex items-center gap-2 text-xs">
+                  <span className="text-emerald-400 w-4">{i + 1}.</span>
+                  <span className="text-gray-400">{item}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </div>
 
-          {/* File Locations */}
+          {/* Key Rules */}
           <div>
             <h4 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-4">
-              File Locations
+              Core Stack
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5">
               {[
-                { label: "Log File", path: "%ProgramData%\\ERP\\logs\\setup.log" },
-                { label: "State File", path: "%ProgramData%\\ERP\\setup-state.json" },
-                { label: "Data Dir", path: "%ProgramData%\\ERP\\data" },
-                { label: "Config Dir", path: "%ProgramData%\\ERP\\config" },
+                "Python 3.12 + FastAPI",
+                "SQLAlchemy 2.x Async",
+                "PostgreSQL 15+ + pgvector",
+                "Redis 7.x",
+                "Celery 5.x",
+                "Ollama (Local LLM)",
+                "Docker + Compose",
+                "Prometheus + Grafana",
               ].map((item) => (
-                <li key={item.label} className="text-xs">
-                  <span className="text-gray-500">{item.label}: </span>
-                  <code className="text-emerald-400/80">{item.path}</code>
+                <li key={item} className="flex items-center gap-2 text-xs">
+                  <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                  <span className="text-gray-400">{item}</span>
                 </li>
               ))}
             </ul>
@@ -63,11 +71,11 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-600">
-            ERP v1.2.0 LTS Setup Script Documentation
+            ERP Platform Architecture Documentation
           </p>
           <div className="flex items-center gap-4">
             <span className="text-xs text-gray-600">
-              Run with: <code className="text-gray-400">powershell -ExecutionPolicy Bypass -File .\setup.ps1</code>
+              Architecture: <span className="text-gray-400">Modular Monolith → Clean Boundaries → Evidence-Based Extraction</span>
             </span>
           </div>
         </div>
