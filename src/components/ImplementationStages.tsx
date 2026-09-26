@@ -142,9 +142,9 @@ export default function ImplementationStages() {
   const stage = stages[activeStage];
   const colors = colorMap[stage.color];
 
-  // Stage 1 is 100% complete
+  // Stage 1 and 2 are 100% complete
   const getStageProgress = (stageId: number): number => {
-    if (stageId === 1) return 100;
+    if (stageId === 1 || stageId === 2) return 100;
     if (stageId < activeStage + 1) return 100;
     if (stageId === activeStage + 1) return 50;
     return 0;
@@ -328,6 +328,188 @@ export default function ImplementationStages() {
               ].map((feature) => (
                 <div key={feature} className="flex items-center gap-2 text-xs p-2 rounded bg-gray-950/50">
                   <span className="text-emerald-400">✓</span>
+                  <span className="text-gray-400">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stage 2 Completion Details */}
+      {activeStage === 1 && (
+        <div className="mt-8 rounded-xl border border-blue-500/30 bg-blue-500/5 p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">✅</span>
+            <div>
+              <h4 className="text-lg font-bold text-blue-400">Stage 2 — Core Business Complete</h4>
+              <p className="text-xs text-gray-400">All core business entities and authentication implemented</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Created Files</h5>
+              <div className="space-y-1.5">
+                {[
+                  "pyproject.toml",
+                  ".env.example",
+                  "app/__init__.py",
+                  "app/config.py",
+                  "app/main.py",
+                  "app/lifespan.py",
+                  "app/api/__init__.py",
+                  "app/api/router.py",
+                  "app/api/health.py",
+                  "app/api/websocket.py",
+                  "app/infrastructure/database/engine.py",
+                  "app/infrastructure/database/base.py",
+                  "app/infrastructure/redis/client.py",
+                ].map((file) => (
+                  <div key={file} className="flex items-center gap-2 text-xs">
+                    <span className="text-emerald-400">✓</span>
+                    <code className="text-gray-400">{file}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Infrastructure</h5>
+              <div className="space-y-1.5">
+                {[
+                  "alembic.ini",
+                  "migrations/env.py",
+                  "migrations/script.py.mako",
+                  "Dockerfile",
+                  "docker-compose.yml",
+                  ".dockerignore",
+                  ".github/workflows/ci.yml",
+                  "deploy/prometheus.yml",
+                  "workers/celery_app.py",
+                  "tests/conftest.py",
+                  "tests/api/test_health.py",
+                  "tests/unit/test_config.py",
+                ].map((file) => (
+                  <div key={file} className="flex items-center gap-2 text-xs">
+                    <span className="text-emerald-400">✓</span>
+                    <code className="text-gray-400">{file}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 pt-4">
+            <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Key Features Implemented</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {[
+                "Pydantic Settings with validation",
+                "Async SQLAlchemy engine with bounded pool",
+                "Redis client with health checks",
+                "FastAPI lifespan management",
+                "Health endpoints (live, ready, startup)",
+                "WebSocket notification transport",
+                "Alembic async migrations",
+                "Multi-stage Docker build",
+                "Non-root container security",
+                "Docker Compose with all services",
+                "GitHub Actions CI pipeline",
+                "Prometheus + Grafana observability",
+                "Celery worker and beat scheduler",
+                "Comprehensive test suite",
+                "Structured logging",
+              ].map((feature) => (
+                <div key={feature} className="flex items-center gap-2 text-xs p-2 rounded bg-gray-950/50">
+                  <span className="text-emerald-400">✓</span>
+                  <span className="text-gray-400">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stage 2 Completion Details */}
+      {activeStage === 1 && (
+        <div className="mt-8 rounded-xl border border-blue-500/30 bg-blue-500/5 p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">✅</span>
+            <div>
+              <h4 className="text-lg font-bold text-blue-400">Stage 2 — Core Business Complete</h4>
+              <p className="text-xs text-gray-400">All core business entities and authentication implemented</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Domain Entities</h5>
+              <div className="space-y-1.5">
+                {[
+                  "app/domain/users/entities.py",
+                  "app/domain/organizations/entities.py",
+                  "app/domain/branches/entities.py",
+                  "app/domain/roles/entities.py",
+                  "app/domain/products/entities.py",
+                  "app/domain/customers/entities.py",
+                  "app/domain/suppliers/entities.py",
+                  "app/domain/inventory/entities.py",
+                  "app/domain/exceptions.py",
+                ].map((file) => (
+                  <div key={file} className="flex items-center gap-2 text-xs">
+                    <span className="text-blue-400">✓</span>
+                    <code className="text-gray-400">{file}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Infrastructure</h5>
+              <div className="space-y-1.5">
+                {[
+                  "app/infrastructure/database/models/user.py",
+                  "app/infrastructure/database/models/organization.py",
+                  "app/infrastructure/database/models/branch.py",
+                  "app/infrastructure/database/models/role.py",
+                  "app/infrastructure/database/models/product.py",
+                  "app/infrastructure/database/models/customer.py",
+                  "app/infrastructure/database/models/supplier.py",
+                  "app/infrastructure/database/models/inventory.py",
+                  "app/infrastructure/repositories/user_repository.py",
+                  "app/infrastructure/auth/security.py",
+                ].map((file) => (
+                  <div key={file} className="flex items-center gap-2 text-xs">
+                    <span className="text-blue-400">✓</span>
+                    <code className="text-gray-400">{file}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 pt-4">
+            <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Key Features Implemented</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {[
+                "User authentication (JWT)",
+                "Password hashing (bcrypt)",
+                "Multi-tenant isolation",
+                "Organization management",
+                "Branch/location management",
+                "Role-based access control",
+                "Permission system",
+                "Product catalog",
+                "Customer management",
+                "Supplier management",
+                "Inventory stock tracking",
+                "Stock movement audit trail",
+                "Stock reservations",
+                "Repository pattern",
+                "Database migrations",
+              ].map((feature) => (
+                <div key={feature} className="flex items-center gap-2 text-xs p-2 rounded bg-gray-950/50">
+                  <span className="text-blue-400">✓</span>
                   <span className="text-gray-400">{feature}</span>
                 </div>
               ))}
