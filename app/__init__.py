@@ -1,0 +1,1 @@
+"""ERP Platform — Application Package."""

@@ -1,0 +1,159 @@
+# =============================================================================
+# ERP Platform — Docker Compose
+# =============================================================================
+# Core services for local development and testing.
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # Backend API
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: erp-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - APP_DEBUG=true
+      - APP_LOG_LEVEL=INFO
+      - DATABASE_URL=postgresql+asyncpg://erp:erp_password@postgres:5432/erp
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - APP_SECRET_KEY=dev-secret-key-change-in-production-min-32-chars!!
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:15-alpine
+    container_name: erp-postgres
+    environment:
+      POSTGRES_DB: erp
+      POSTGRES_USER: erp
+      POSTGRES_PASSWORD: erp_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U erp -d erp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Redis
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: erp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Celery Worker
+  # ---------------------------------------------------------------------------
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: erp-celery-worker
+    command: celery -A workers.celery_app worker --loglevel=info
+    environment:
+      - APP_ENV=development
+      - DATABASE_URL=postgresql+asyncpg://erp:erp_password@postgres:5432/erp
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - APP_SECRET_KEY=dev-secret-key-change-in-production-min-32-chars!!
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Celery Beat (Scheduler)
+  # ---------------------------------------------------------------------------
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: erp-celery-beat
+    command: celery -A workers.celery_app beat --loglevel=info
+    environment:
+      - APP_ENV=development
+      - DATABASE_URL=postgresql+asyncpg://erp:erp_password@postgres:5432/erp
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - APP_SECRET_KEY=dev-secret-key-change-in-production-min-32-chars!!
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Prometheus (Metrics)
+  # ---------------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: erp-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./deploy/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Grafana (Dashboards)
+  # ---------------------------------------------------------------------------
+  grafana:
+    image: grafana/grafana:latest
+    container_name: erp-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
