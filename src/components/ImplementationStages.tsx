@@ -142,9 +142,9 @@ export default function ImplementationStages() {
   const stage = stages[activeStage];
   const colors = colorMap[stage.color];
 
-  // Stage 1 and 2 are 100% complete
+  // Stage 1, 2, and 3 are 100% complete
   const getStageProgress = (stageId: number): number => {
-    if (stageId === 1 || stageId === 2) return 100;
+    if (stageId === 1 || stageId === 2 || stageId === 3) return 100;
     if (stageId < activeStage + 1) return 100;
     if (stageId === activeStage + 1) return 50;
     return 0;
@@ -510,6 +510,85 @@ export default function ImplementationStages() {
               ].map((feature) => (
                 <div key={feature} className="flex items-center gap-2 text-xs p-2 rounded bg-gray-950/50">
                   <span className="text-blue-400">✓</span>
+                  <span className="text-gray-400">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stage 3 Completion Details */}
+      {activeStage === 2 && (
+        <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">✅</span>
+            <div>
+              <h4 className="text-lg font-bold text-amber-400">Stage 3 — Transactions Complete</h4>
+              <p className="text-xs text-gray-400">All transaction entities and financial operations implemented</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Domain Entities</h5>
+              <div className="space-y-1.5">
+                {[
+                  "app/domain/sales/entities.py",
+                  "app/domain/purchases/entities.py",
+                  "app/domain/payments/entities.py",
+                  "app/domain/receivables/entities.py",
+                  "app/domain/payables/entities.py",
+                  "app/domain/closing/entities.py",
+                ].map((file) => (
+                  <div key={file} className="flex items-center gap-2 text-xs">
+                    <span className="text-amber-400">✓</span>
+                    <code className="text-gray-400">{file}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Infrastructure</h5>
+              <div className="space-y-1.5">
+                {[
+                  "app/infrastructure/database/models/sales.py",
+                  "app/infrastructure/database/models/purchases.py",
+                  "app/infrastructure/database/models/payments.py",
+                  "app/infrastructure/database/models/receivables.py",
+                  "app/infrastructure/database/models/payables.py",
+                  "app/infrastructure/database/models/closing.py",
+                  "migrations/versions/003_transactions.py",
+                ].map((file) => (
+                  <div key={file} className="flex items-center gap-2 text-xs">
+                    <span className="text-amber-400">✓</span>
+                    <code className="text-gray-400">{file}</code>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 pt-4">
+            <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">Key Features Implemented</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {[
+                "Sales order management",
+                "Purchase order management",
+                "Payment processing",
+                "Receivables tracking",
+                "Payables tracking",
+                "Daily closing operations",
+                "Transaction audit trails",
+                "Multi-currency support",
+                "Payment allocations",
+                "Status workflows",
+                "Fixed-precision decimals",
+                "Tenant isolation",
+              ].map((feature) => (
+                <div key={feature} className="flex items-center gap-2 text-xs p-2 rounded bg-gray-950/50">
+                  <span className="text-amber-400">✓</span>
                   <span className="text-gray-400">{feature}</span>
                 </div>
               ))}
