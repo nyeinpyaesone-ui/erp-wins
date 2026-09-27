@@ -5,6 +5,7 @@ import DomainBoundaries from "./components/DomainBoundaries";
 import TechnologyStack from "./components/TechnologyStack";
 import EngineeringPrinciples from "./components/EngineeringPrinciples";
 import ImplementationStages from "./components/ImplementationStages";
+import SystemData from "./components/SystemData";
 import Footer from "./components/Footer";
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
                 { id: "technology", label: "Technology" },
                 { id: "principles", label: "Principles" },
                 { id: "stages", label: "Stages" },
+                { id: "data", label: "System Data" },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -75,6 +77,9 @@ export default function App() {
         </section>
         <section id="stages">
           <ImplementationStages />
+        </section>
+        <section id="data">
+          <SystemData />
         </section>
         <Footer />
       </main>

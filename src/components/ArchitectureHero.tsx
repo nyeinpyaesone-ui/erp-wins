@@ -40,8 +40,8 @@ export default function ArchitectureHero() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
               { label: "Domains", value: "7" },
-              { label: "Stages", value: "7" },
-              { label: "Non-Negotiable Rules", value: "30" },
+              { label: "Stages Complete", value: "2/7" },
+              { label: "System Records", value: "129" },
               { label: "Priority", value: "Correctness" },
             ].map((stat) => (
               <div
